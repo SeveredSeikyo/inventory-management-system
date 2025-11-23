@@ -129,27 +129,5 @@ npm test
 - Backend: Ensure the host allows persistent storage for the SQLite file or switch to a managed DB (Postgres) for production. Configure `PORT` and environment variables in your hosting service. Provide `start` script in `backend/package.json`.
 - Frontend: Build with `npm run build` and deploy the `build/` folder to Netlify, Vercel, or a static host. Update API base URL to the deployed backend URL.
 
-## Bonus / Improvements
-
-- Add server-side pagination and sorting (`?page=&limit=&sort=&order=`) to `GET /api/products`.
-- Add JWT authentication and protect API routes. Use `bcrypt` for password hashing.
-- Move to PostgreSQL (or another managed DB) for production to avoid SQLite persistence issues.
-
-## Submission Checklist
-
-- **Repository:** public GitHub repo link (share URL).
-- **Backend Live URL:** deployed API base URL.
-- **Frontend Live URL:** deployed React app URL.
-
-Include these links in your submission message.
-
 ---
-
-If you want, I can:
-
-- update `backend/package.json` to add `dev` and `start` scripts (if missing),
-- add an example `.env.example`, or
-- create a sample CSV to test the import flow.
-
-Tell me which of those you'd like me to do next.
 
