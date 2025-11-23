@@ -29,7 +29,6 @@ A full-stack inventory management application built with React, Node.js, Express
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
 
 ## 🛠 Tech Stack
 
