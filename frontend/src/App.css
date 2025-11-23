@@ -1,0 +1,30 @@
+.App {
+  text-align: left;
+}
+
+.App-header {
+  padding: 16px 0;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 18px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 18px auto 0;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .main { flex-direction: column; gap: 12px; }
+}
+
+@media (max-width: 1024px) {
+  .main { gap: 12px; }
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 18px;
+}
