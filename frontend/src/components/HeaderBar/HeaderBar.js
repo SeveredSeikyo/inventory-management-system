@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import debounce from "../../utils/debounce";
 
 export default function HeaderBar({ exportCSV, openImport, onRefresh, onSearch, categories = [], selectedCategory, onCategoryChange, loading = false }) {
     const [query, setQuery] = useState("");
+    const navigate = useNavigate();
+    const { logout } = useAuth();
 
     const debounced = debounce((value) => {
         if (onSearch) onSearch(value);
@@ -31,6 +35,7 @@ export default function HeaderBar({ exportCSV, openImport, onRefresh, onSearch, 
                 {loading ? <div className="header-spinner" aria-hidden="true"></div> : null}
                 <button onClick={openImport} disabled={loading}>Import</button>
                 <button onClick={exportCSV} disabled={loading}>Export</button>
+                <button onClick={() => { logout(); navigate('/login', { replace: true }); }} disabled={loading}>Logout</button>
             </div>
         </header>
     );
