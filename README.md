@@ -1,133 +1,369 @@
-# Inventory Management App
+# Inventory Management System
 
-This repository contains a full-stack Inventory Management application with a Node/Express + SQLite backend and a React frontend. The project includes product CRUD, CSV import/export, and inventory history tracking.
+A full-stack inventory management application built with React, Node.js, Express, and SQLite. This system provides comprehensive product tracking, inventory history, import/export capabilities, and user authentication.
 
-## Contents
+## 🚀 Features
 
-- `backend/` — Node.js + Express API, SQLite DB, import/export endpoints.
-- `frontend/` — React app (Create React App) for product UI and history sidebar.
+### Core Features
+- **Product Management**: Create, read, update, and delete products with inline editing
+- **Inventory Tracking**: Automatic history logging for all stock changes
+- **Import/Export**: Bulk operations via CSV files
+- **Search & Filter**: Real-time search and category-based filtering
+- **Stock Status**: Visual indicators for stock availability (In Stock/Out of Stock)
+- **Responsive Design**: Mobile-friendly interface
 
-## Prerequisites
+### Bonus Features
+- **Authentication**: Secure JWT-based user authentication
+- **Client-Side Pagination & Sorting**: Efficient data handling for large inventories
+- **Unit Testing**: Comprehensive test coverage for critical components
+- **History Sidebar**: Detailed view of inventory changes per product
 
-- Node.js (v16+ recommended) and npm installed.
-- Git (optional, for cloning).
+## 📋 Table of Contents
 
-## Local Setup
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
 
-Follow these steps to run the app locally.
+## 🛠 Tech Stack
 
-**1) Backend (API)**
+### Backend
+- **Runtime**: Node.js
+- **Framework**: Express.js
+- **Database**: SQLite3
+- **Authentication**: JWT (JSON Web Tokens)
+- **Validation**: Express-validator
+- **File Upload**: Multer
+- **CSV Parsing**: csv-parser
+- **Testing**: Jest, Supertest
 
-- Open a terminal and navigate to the `backend` folder:
+### Frontend
+- **Framework**: React 18
+- **HTTP Client**: Axios
+- **Routing**: React Router DOM
+- **Testing**: Jest, React Testing Library
+- **Styling**: CSS3 with Flexbox/Grid
 
-```powershell
-cd backend
+## 📁 Project Structure
+
+```
+inventory-management-app/
+├── backend/
+│   ├── middleware/
+│   │   └── auth.middleware.js      # JWT authentication middleware
+│   ├── models/
+│   │   └── db.js                   # Database initialization & queries
+│   ├── routes/
+│   │   ├── auth.routes.js          # Authentication endpoints
+│   │   ├── history.routes.js       # Inventory history endpoints
+│   │   ├── products.routes.js      # Product CRUD endpoints
+│   │   └── uploads.routes.js       # Import/Export endpoints
+│   ├── utils/
+│   │   ├── auth.validator.js       # Auth validation rules
+│   │   └── products.validators.js  # Product validation rules
+│   ├── __tests__/
+│   │   ├── auth.test.js           # Authentication tests
+│   │   └── product.test.js        # Product API tests
+│   ├── uploads/                    # Temporary file uploads
+│   ├── app.js                      # Express app configuration
+│   ├── server.js                   # Server entry point
+│   ├── inventory.db                # SQLite database
+│   ├── .env.example               # Environment variables template
+│   └── package.json
+│
+└── frontend/
+    ├── public/                     # Static assets
+    ├── src/
+    │   ├── api/
+    │   │   └── axios.js           # Axios configuration
+    │   ├── components/
+    │   │   ├── HeaderBar/         # Top navigation bar
+    │   │   ├── HistorySidebar/    # Inventory history display
+    │   │   ├── ImportModal/       # CSV import dialog
+    │   │   ├── InlineEditor/      # Inline product editing
+    │   │   └── ProductsTable/     # Product list table
+    │   ├── hooks/
+    │   │   ├── useAuth.js         # Authentication hook
+    │   │   └── useProducts.js     # Product data hook
+    │   ├── pages/
+    │   │   ├── Dashboard.js       # Main product dashboard
+    │   │   ├── Login.js           # Login page
+    │   │   └── Signup.js          # Registration page
+    │   ├── routes/
+    │   │   ├── ProtectedRoute.js  # Auth-protected routes
+    │   │   └── PublicRoute.js     # Public routes
+    │   ├── utils/
+    │   │   └── debounce.js        # Debounce utility
+    │   ├── App.js                  # Root component
+    │   └── index.js                # Entry point
+    ├── .env.example               # Environment variables template
+    └── package.json
 ```
 
-- Install dependencies:
+## ✅ Prerequisites
 
-```powershell
+- **Node.js**: v14.0.0 or higher
+- **npm**: v6.0.0 or higher
+- **Git**: For cloning the repository
+
+## 🔧 Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/inventory-management-app.git
+cd inventory-management-app
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
 npm install
 ```
 
-- Create a `.env` file in `backend/` if you want to customize environment variables (optional). Example:
+### 3. Frontend Setup
 
+```bash
+cd ../frontend
+npm install
 ```
-PORT=4000
-DATABASE_PATH=./inventory.db
-JWT_SECRET=your_jwt_secret_here
+
+## ⚙️ Configuration
+
+### Backend Configuration
+
+1. Copy the environment template:
+```bash
+cd backend
+cp .env.example .env
 ```
 
-- Start the server in development (uses `nodemon` when available):
+2. Edit `.env` with your configuration:
+```env
+PORT=5000
+NODE_ENV=development
+JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
+JWT_EXPIRES_IN=7d
+CORS_ORIGIN=http://localhost:3000
+```
 
-```powershell
+### Frontend Configuration
+
+1. Copy the environment template:
+```bash
+cd frontend
+cp .env.example .env
+```
+
+2. Edit `.env` with your backend URL:
+```env
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+## 🚀 Running the Application
+
+### Development Mode
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
 npm run dev
 ```
+Backend will run on `http://localhost:5000`
 
-- Or start normally:
-
-```powershell
-npm start
-```
-
-- The API will listen on `http://localhost:<PORT>` (default `4000` if set in `.env`).
-
-**Database initialization**
-
-On first run the server will create `inventory.db` (SQLite) and initialize the `products` and `inventory_history` tables. No manual migration is required.
-
-**API endpoints (summary)**
-
-- `GET /api/products` — Get all products (supports optional query params for category, pagination, sorting if implemented).
-- `GET /api/products/:id` — Get single product by id.
-- `PUT /api/products/:id` — Update product (tracks stock changes to `inventory_history`).
-- `POST /api/products/import` — Import products from uploaded CSV file (multipart/form-data, field `csvFile`).
-- `GET /api/products/export` — Export all products as CSV (downloadable file).
-- `GET /api/products/:id/history` — Get inventory history for a product, sorted by date DESC.
-
-Refer to source files in `backend/routes/` for full behavior and validation rules.
-
-**Import CSV format**
-
-The import expects a CSV with headers such as: `name,unit,category,brand,stock,status,image` (order and exact fields may vary — review `backend` import handler).
-
-**Notes on uploads**: Uploaded CSVs are stored temporarily in `backend/uploads/` before processing. Duplicate product names are skipped by default; the endpoint returns counts of added/skipped items.
-
-**2) Frontend (React)**
-
-- Open a new terminal and navigate to the `frontend` folder:
-
-```powershell
+**Terminal 2 - Frontend:**
+```bash
 cd frontend
-```
-
-- Install dependencies:
-
-```powershell
-npm install
-```
-
-- Start the development server:
-
-```powershell
 npm start
 ```
+Frontend will run on `http://localhost:3000`
 
-- The React app runs by default at `http://localhost:3000` and expects the backend API to be reachable (update `frontend/src/api/axios.js` base URL if your backend runs on a different host/port).
+### Production Mode
 
-**Import / Export UI**
-
-- Use the `Import` button to upload a CSV file; the UI will send a `POST` with form-data with key `csvFile` to `/api/products/import`.
-- Use the `Export` button to download `products.csv` from `/api/products/export`.
-
-**Inventory History**
-
-- Click a product row or the `View History` action to open the History sidebar. The frontend fetches `GET /api/products/:id/history` and displays past stock changes.
-
-## Inline Editing
-
-- Product rows support inline editing. On save the frontend sends `PUT /api/products/:id`. If the `stock` value changed, the backend inserts a new record into `inventory_history`.
-
-## Testing
-
-- Backend tests (if provided) live in `backend/__tests__/`. Run with:
-
-```powershell
+**Backend:**
+```bash
 cd backend
-npm test
+npm start
 ```
 
-- Frontend tests live in `frontend/src/` (React Testing Library). Run with:
-
-```powershell
+**Frontend:**
+```bash
 cd frontend
-npm test
+npm run build
+# Serve the build folder with a static server
 ```
 
-## Deployment Notes
+## 📚 API Documentation
 
-- Backend: Ensure the host allows persistent storage for the SQLite file or switch to a managed DB (Postgres) for production. Configure `PORT` and environment variables in your hosting service. Provide `start` script in `backend/package.json`.
-- Frontend: Build with `npm run build` and deploy the `build/` folder to Netlify, Vercel, or a static host. Update API base URL to the deployed backend URL.
+### Authentication Endpoints
 
----
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/auth/register` | Register new user | No |
+| POST | `/api/auth/login` | Login user | No |
 
+### Product Endpoints
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/products` | Get all products | Yes |
+| GET | `/api/products/:id` | Get single product | Yes |
+| POST | `/api/products` | Create new product | Yes |
+| PUT | `/api/products/:id` | Update product | Yes |
+| DELETE | `/api/products/:id` | Delete product | Yes |
+
+**Query Parameters for GET `/api/products`:**
+- `search`: Search by product name (optional)
+- `category`: Filter by category (optional)
+
+**Note:** Pagination and sorting are handled client-side for better performance with the current dataset size.
+
+### Import/Export Endpoints
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/products/import` | Import products from CSV | Yes |
+| GET | `/api/products/export` | Export products to CSV | Yes |
+
+### History Endpoints
+
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/products/:id/history` | Get inventory history for product | Yes |
+
+### Example Requests
+
+**Register User:**
+```bash
+curl -X POST http://localhost:5000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"username":"john","email":"john@example.com","password":"password123"}'
+```
+
+**Get Products:**
+```bash
+curl -X GET "http://localhost:5000/api/products" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+**Search Products:**
+```bash
+curl -X GET "http://localhost:5000/api/products?search=laptop&category=Electronics" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+**Import CSV:**
+```bash
+curl -X POST http://localhost:5000/api/products/import \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "csvFile=@products.csv"
+```
+
+**Export CSV:**
+```bash
+curl -X GET http://localhost:5000/api/products/export \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -o products.csv
+```
+
+## 🧪 Testing
+
+### Backend Tests
+
+```bash
+cd backend
+npm test                  # Run all tests
+npm test -- --coverage   # Run with coverage report
+```
+
+### Frontend Tests
+
+```bash
+cd frontend
+npm test                 # Run all tests
+npm test -- --coverage  # Run with coverage report
+```
+
+## 🌐 Deployment
+
+### Backend Deployment (Render/Railway/Heroku)
+
+1. Push your code to GitHub
+2. Connect your repository to your hosting service
+3. Set environment variables in the hosting dashboard:
+   - `PORT`
+   - `NODE_ENV=production`
+   - `JWT_SECRET`
+   - `JWT_EXPIRES_IN`
+   - `CORS_ORIGIN` (your frontend URL)
+4. Deploy command: `npm start`
+5. Note the deployed backend URL
+
+### Frontend Deployment (Netlify/Vercel)
+
+1. Update `.env` with your production backend URL:
+   ```env
+   REACT_APP_API_URL=https://your-backend-url.com/api
+   ```
+2. Build the application: `npm run build`
+3. Deploy the `build` folder
+4. Configure build settings:
+   - Build command: `npm run build`
+   - Publish directory: `build`
+
+### Important Deployment Notes
+
+- **CORS Configuration**: Update `CORS_ORIGIN` in backend `.env` to match your deployed frontend URL
+- **Database**: SQLite works for small deployments. For production with multiple instances, consider migrating to PostgreSQL or MySQL
+- **HTTPS**: Ensure both frontend and backend are served over HTTPS
+- **JWT Secret**: Use a strong, random JWT secret in production (minimum 32 characters)
+- **Environment Variables**: Never commit `.env` files. Always use `.env.example` as a template
+
+## 📝 CSV Import Format
+
+Your CSV file should follow this structure:
+
+```csv
+name,unit,category,brand,stock,status,image
+Product A,pcs,Electronics,BrandX,100,active,http://example.com/image.jpg
+Product B,kg,Food,BrandY,50,active,http://example.com/image2.jpg
+```
+
+**Required Fields:**
+- `name`: Product name (must be unique)
+- `stock`: Stock quantity (integer)
+
+**Optional Fields:**
+- `unit`: Unit of measurement (e.g., pcs, kg, liters)
+- `category`: Product category (e.g., Electronics, Food, Clothing)
+- `brand`: Brand name
+- `status`: Product status (e.g., active, discontinued)
+- `image`: Image URL
+
+**Import Notes:**
+- Duplicate product names will be skipped
+- The API returns a summary of imported and skipped products
+- Invalid rows are logged and can be reviewed
+
+## 🔧 Available Scripts
+
+### Backend Scripts
+
+- `npm start`: Start production server
+- `npm run dev`: Start development server with nodemon
+- `npm test`: Run tests
+- `npm test -- --coverage`: Run tests with coverage
+
+### Frontend Scripts
+
+- `npm start`: Start development server
+- `npm run build`: Build for production
+- `npm test`: Run tests in watch mode
+- `npm run eject`: Eject from Create React App (one-way operation)
